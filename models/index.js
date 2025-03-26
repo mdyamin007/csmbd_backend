@@ -8,9 +8,13 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 // Import models
 const User = require('./User')(sequelize);
 const Content = require('./Content')(sequelize);
+const RefreshToken = require('./RefreshToken')(sequelize);
 
 // Associations
 User.hasMany(Content, { foreignKey: 'userId', as: 'contents' });
 Content.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
-module.exports = { sequelize, User, Content };
+User.hasMany(RefreshToken, { foreignKey: 'userId', as: 'refreshToken' });
+RefreshToken.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+module.exports = { sequelize, User, Content, RefreshToken };
