@@ -95,7 +95,7 @@ exports.refresh = async (req, res) => {
         userId: user.id,
         expiryDate: newExpiryDate
       });
-      await storedToken.destroy();
+      await RefreshToken.destroy({ where: { token: refreshToken } });
 
       res.status(200).json({ accessToken: newAccessToken, refreshToken: newRefreshToken });
     });
