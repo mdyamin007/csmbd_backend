@@ -7,6 +7,8 @@ exports.createContent = async (req, res) => {
     if (error) return res.status(400).json({ error: error.details[0].message });
 
     const newContent = await Content.create({
+      title: value.title,
+      description: value.description,
       youtubeLink: value.youtubeLink,
       userId: req.user.id
     });
@@ -30,6 +32,22 @@ exports.updateContent = async (req, res) => {
 
     await content.update(value);
     res.json({ message: 'Content updated successfully', content });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.deleteContent = async (req, res) => {
+  try {
+    const contentId = req.params.id;
+    const content = await Content.findByPk(contentId);
+    if (!content) return res.status(404).json({ error: 'Content not found' });
+    if (content.userId !== req.user.id) {
+      return res.status(403).json({ error: 'Unauthorized to delete this content' });
+    }
+
+    await content.destroy();
+    res.json({ message: 'Content deleted successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

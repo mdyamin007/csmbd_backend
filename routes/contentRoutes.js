@@ -9,6 +9,9 @@ router.post('/', authMiddleware, contentController.createContent);
 // Update content (only owner can update)
 router.put('/:id', authMiddleware, contentController.updateContent);
 
+// Delete content (only owner can delete)
+router.delete('/:id', authMiddleware, contentController.deleteContent);
+
 // Get content by user id (publicly viewable)
 router.get('/user/:userId', contentController.getUserContents);
 
