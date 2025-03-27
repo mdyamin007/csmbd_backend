@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    descrition: {
+    description: {
       type: DataTypes.STRING
     },
     youtubeLink: {
