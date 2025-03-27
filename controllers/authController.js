@@ -82,10 +82,10 @@ exports.login = async (req, res) => {
 exports.refresh = async (req, res) => {
   try {
     // Validate the incoming refresh token payload
-    const { error, value } = refreshSchema.validate(req.body);
+    const { error, value } = refreshSchema.validate(req.headers.authorization);
     if (error) return res.status(400).json({ error: error.details[0].message });
 
-    const { refreshToken } = value;
+    const refreshToken = value.split(' ')[1];
     if (!refreshToken)
       return res.status(401).json({ error: "Refresh token required" });
 

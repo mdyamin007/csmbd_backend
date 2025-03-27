@@ -11,6 +11,4 @@ exports.loginSchema = Joi.object({
   password: Joi.string().required()
 });
 
-exports.refreshSchema = Joi.object({
-  refreshToken: Joi.string().required()
-});
+exports.refreshSchema = Joi.string().required();
